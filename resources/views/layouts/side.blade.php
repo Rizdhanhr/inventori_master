@@ -118,12 +118,13 @@
             <span>Pelanggan</span></a>
     </li>
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+    <li class="nav-item {{ (request()->is('supplier*')) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('supplier.index') }}">
             <i class="fas fa-truck"></i>
             <span>Supplier</span></a>
     </li>
 
+    @if(Auth::check() && Auth::user()->level == "1")
      <!-- Divider -->
      <hr class="sidebar-divider">
      <!-- Heading -->
@@ -131,14 +132,15 @@
         Pengaturan
      </div>
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+    <li class="nav-item {{ (request()->is('manajemen-user*')) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('manajemen-user.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Manajemen User</span></a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+    @endif
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

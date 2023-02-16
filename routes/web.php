@@ -9,6 +9,8 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DetailUserController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ManajemenUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,14 +39,31 @@ Route::post('login', [LoginController::class,'login']);
 
 Route::middleware(['auth'])->group(function () {
     Route::post('logout', [LoginController::class,'logout'])->name('logout');
+    //Dashboard
     Route::resource('/dashboard', DashboardController::class);
+
+    //Atribut Barang
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/brand', BrandController::class);
     Route::resource('/satuan', SatuanController::class);
+
+    //Barang
     Route::resource('/barang', BarangController::class);
+
+    //Edit Profil
     Route::post('/ganti-password',[DetailUserController::class,'gantipassword'])->name('ganti-password');
     Route::resource('/user', DetailUserController::class);
+
+    //Supplier Dan Pelanggan
     Route::resource('/pelanggan', PelangganController::class);
+    Route::resource('/supplier', SupplierController::class);
+
+    //Super Admin
+    Route::middleware(['superAdmin'])->group(function () {
+        Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');
+        Route::resource('/manajemen-user', ManajemenUserController::class);
+    });
+
 });
 
 

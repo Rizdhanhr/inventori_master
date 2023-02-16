@@ -21,7 +21,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">No Telp.</label>
-                <input type="text" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" id="exampleInputEmail1"  value="{{ old('no_hp') }}" aria-describedby="emailHelp" placeholder="Masukkan No Telp. Pelanggan">
+                <input type="number" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" id="exampleInputEmail1"  value="{{ old('no_hp') }}" aria-describedby="emailHelp" placeholder="Masukkan No Telp. Pelanggan">
                 <span style="color : red">@error('no_hp') {{ $message }} @enderror</span>
             </div>
             <div class="mb-3">

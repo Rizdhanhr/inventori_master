@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Alert;
+use DB;
+use App\Models\Supplier;
 
 class SupplierController extends Controller
 {
@@ -13,7 +16,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $supplier = Supplier::orderByDesc('created_at')->get();
+        return view('supplier.index',compact('supplier'));
     }
 
     /**
@@ -23,7 +27,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('supplier.create');
     }
 
     /**
@@ -34,7 +38,25 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'nama' => 'required|max:50',
+            'no_hp' => 'required|max:20',
+            'alamat' => 'required|max:100'
+        ]);
+
+        try{
+            DB::transaction(function () use($request){
+                $supplier = new Supplier;
+                $supplier->nama = $request->nama;
+                $supplier->no_hp = $request->no_hp;
+                $supplier->alamat = $request->alamat;
+                $supplier->save();
+            });
+            alert()->success('Sukses','Data Tersimpan');
+            return redirect('supplier');
+        }catch(Exception $e){
+
+        }
     }
 
     /**
@@ -56,7 +78,8 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        return view('supplier.edit',compact('supplier'));
     }
 
     /**
@@ -68,7 +91,25 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'nama' => 'required|max:50',
+            'no_hp' => 'required|max:20',
+            'alamat' => 'required|max:100'
+        ]);
+
+        try{
+            DB::transaction(function () use($request,$id){
+                $supplier = Supplier::findOrFail($id);
+                $supplier->nama = $request->nama;
+                $supplier->no_hp = $request->no_hp;
+                $supplier->alamat = $request->alamat;
+                $supplier->save();
+            });
+            alert()->success('Sukses','Data Berhasil Diupdate');
+            return redirect('supplier');
+        }catch(Exception $e){
+
+        }
     }
 
     /**
@@ -79,6 +120,16 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            DB::transaction(function () use($id){
+                $supplier = Supplier::findOrFail($id);
+                $supplier->delete();
+            });
+            alert()->success('Sukses','Data Terhapus');
+            return redirect()->back();
+        }catch(Exception $e){
+
+        }
+
     }
 }
