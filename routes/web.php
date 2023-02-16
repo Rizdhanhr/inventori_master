@@ -11,6 +11,7 @@ use App\Http\Controllers\DetailUserController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ManajemenUserController;
+use App\Http\Controllers\BarangMasukController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,16 +24,13 @@ use App\Http\Controllers\ManajemenUserController;
 */
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class,'login']);
-
-
 // // Registration Routes...
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');
@@ -41,23 +39,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('logout', [LoginController::class,'logout'])->name('logout');
     //Dashboard
     Route::resource('/dashboard', DashboardController::class);
-
     //Atribut Barang
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/brand', BrandController::class);
     Route::resource('/satuan', SatuanController::class);
-
     //Barang
     Route::resource('/barang', BarangController::class);
-
     //Edit Profil
     Route::post('/ganti-password',[DetailUserController::class,'gantipassword'])->name('ganti-password');
     Route::resource('/user', DetailUserController::class);
-
     //Supplier Dan Pelanggan
     Route::resource('/pelanggan', PelangganController::class);
     Route::resource('/supplier', SupplierController::class);
-
+    //Transaksi
+    Route::resource('/barang-masuk', BarangMasukController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');

@@ -29,7 +29,6 @@
                     <input type="text" class="form-control" name="kode" id="kode" placeholder="Scan QR Code/Masukkan Kode Bila Ada !" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <button class="btn btn-primary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-qrcode"></i></button>
                 </div>
-
                 <div class="mb-3">
                     <label for="Nama Barang" class="form-label">Nama Barang</label>
                     <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Masukkan Nama Barang">
