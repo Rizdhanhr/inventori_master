@@ -34,9 +34,9 @@ Route::post('login', [LoginController::class,'login']);
 // // Registration Routes...
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');
-
+Route::post('logout', [LoginController::class,'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
-    Route::post('logout', [LoginController::class,'logout'])->name('logout');
+
     //Dashboard
     Route::resource('/dashboard', DashboardController::class);
     //Atribut Barang
@@ -52,7 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/pelanggan', PelangganController::class);
     Route::resource('/supplier', SupplierController::class);
     //Transaksi
-    Route::resource('/barang-masuk', BarangMasukController::class);
+    Route::get('/getbarang/{kode}', [BarangMasukController::class,'getbarang']);
+    Route::resource('/transaksi-masuk', BarangMasukController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');

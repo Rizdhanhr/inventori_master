@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Barang;
+use DB;
 
 class BarangMasukController extends Controller
 {
@@ -62,5 +64,17 @@ class BarangMasukController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         //
+    }
+
+    public function getbarang(string $kode){
+        $data = DB::table('barang')->where('id',$kode)->get();
+        if($data->isEmpty()){
+            return response()->json([
+                'msg' => 'gagal'
+            ]);
+        }
+        return response()->json($data[0]);
+
+
     }
 }

@@ -16,8 +16,7 @@
 
     </div>
     <div class="card-body">
-        <button class="m-0 btn btn-primary" onclick="window.location.href='{{ route('barang-masuk.create') }}'" style="float: left;">Transaksi Baru</button>
-
+        <button class="m-0 btn btn-primary" onclick="window.location.href='{{ route('transaksi-masuk.create') }}'" style="float: left;">Transaksi Baru</button>
         <div class="table-responsive">
             <br>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
