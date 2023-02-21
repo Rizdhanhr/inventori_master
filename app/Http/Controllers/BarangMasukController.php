@@ -23,7 +23,8 @@ class BarangMasukController extends Controller
      */
     public function create()
     {
-        return view('barang_masuk.create');
+        $barang = Barang::all();
+        return view('barang_masuk.create',compact('barang'));
     }
 
     /**
@@ -67,7 +68,7 @@ class BarangMasukController extends Controller
     }
 
     public function getbarang(string $kode){
-        $data = DB::table('barang')->where('id',$kode)->get();
+        $data = Barang::where('kode',$kode)->get();
         if($data->isEmpty()){
             return response()->json([
                 'msg' => 'gagal'

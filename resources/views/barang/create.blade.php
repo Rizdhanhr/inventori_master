@@ -123,7 +123,7 @@
         </div>
         <div class="modal-body">
             <div class="col-12">
-                <div id="reader" width="500px"></div>
+                <div id="reader" width="500px">Masih Bug</div>
             </div>
 
         </div>
@@ -162,20 +162,21 @@
 
     function onScanError(errorMessage) {
         // handle on error condition, with error message
-        $('.modal').each(function(){
-            $(this).modal('hide');
-        });
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: 'QR Gagal Discan!',
-            timer: 1500,
-            timerProgressBar: true
-        });
+        // $('.modal').each(function(){
+        //     $(this).modal('hide');
+        // });
+
+        // Swal.fire({
+        //     icon: 'error',
+        //     title: 'Gagal',
+        //     text: 'QR Gagal Discan!',
+        //     timer: 1500,
+        //     timerProgressBar: true
+        // });
     }
     var html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess, onScanError);
-    </script>
+    // </script>
     @endonce
 @endpush
