@@ -16,43 +16,52 @@
 
     </div>
     <div class="card-body">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form class="row g-3">
             <div class="input-group mb-3 col-md-5">
                 <input type="text" class="form-control" name="kode" id="kode" placeholder="Scan QR Code/Masukkan Kode !" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn btn-secondary" type="button"  id="btn-search"><i class="fa fa-search"></i></button>
                 <button class="btn btn-primary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-qrcode"></i></button>
-
             </div>
             <div class="col-md-1">
                 <label for="">Atau</label>
             </div>
             <div class="col-md-6">
-                <select class="selectpicker form-control" data-live-search="true">
+                <select onchange="getnama(this.value)" id="barang" class="selectpicker form-control" data-live-search="true">
                     <option selected disabled>Pilih Barang</option>
                     @foreach($barang as $b)
-                    <option data-tokens="{{ $b->id }}">{{ $b->nama }}</option>
-
+                    <option value="{{ $b->kode }}" data-tokens="{{ $b->kode }}">{{ $b->nama }}</option>
                     @endforeach
                 </select>
             </div>
         </form>
         <br>
-        <form class="row g-3">
+        <form class="row g-3" action="{{ route('transaksi-masuk.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id_barang" id="id_barang" readonly>
             <div class="col-md-4">
               <label for="inputEmail4" class="form-label">Nama Barang</label>
-              <input type="email" id="nama" class="form-control" id="inputEmail4" readonly>
+              <input type="text" name="nama" id="nama" class="form-control @error('id_barang') is-invalid @enderror" id="inputEmail4" readonly>
             </div>
             <div class="col-md-2">
               <label for="inputPassword4"  class="form-label">Stok</label>
-              <input type="stok" id="stok" class="form-control" id="inputPassword4" readonly>
+              <input type="number" id="stok" class="form-control @error('id_barang') is-invalid @enderror" id="inputPassword4" readonly>
             </div>
             <div class="col-md-4">
                 <label for="inputPassword4"  class="form-label">Harga</label>
-                <input type="harga" id="harga" class="form-control" id="inputPassword4" readonly>
+                <input type="number" name="harga" id="harga" class="form-control @error('id_barang') is-invalid @enderror" id="inputPassword4" readonly>
               </div>
             <div class="col-md-2">
-                <label for="inputPassword4" class="form-label">Jumlah</label>
-                <input type="password" class="form-control">
+                <label for="inputPassword4" class="form-label ">Jumlah</label>
+                <input type="number" name="jumlah" class="form-control @error('jumlah') is-invalid @enderror">
             </div>
             <div class="col-md-3">
                 <button type="submit" class="btn btn-primary btn-xs">Tambah</button>
@@ -71,28 +80,50 @@
             <thead>
               <tr>
                 <th scope="col" width="8%">#</th>
-                <th scope="col">Nama</th>
+                <th scope="col" width="30%">Nama</th>
                 <th scope="col" width="8%">Jumlah</th>
-                <th scope="col">Harga</th>
+                <th scope="col" width="20%" >Harga</th>
                 <th scope="col">Subtotal</th>
                 <th scope="col" width="8%">Action</th>
               </tr>
             </thead>
             <tbody>
+              @forelse($bm as $row)
               <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Otto</td>
-                <td>Otto</td>
+                <th scope="row">{{ $loop->iteration }}</th>
+                <td>{{ $row->barang->nama }}</td>
+                <td>{{ $row->jumlah }}</td>
+                <td>@currency($row->harga)</td>
+                <td>@currency($row->subtotal)</td>
+                <td>
+                  <form action="{{ route('transaksi-masuk.destroy',$row->id) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" onclick="deleteConfirm(event)" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
+                  </form>
+                </td>
               </tr>
+              @empty
+              <tr>
+                <td colspan="6" align="center" style="color: black;"><strong> KERANJANG KOSONG </strong></td>
+              </tr>
+              @endforelse
               <tr>
                 <td colspan="4" align="right" style="color:#000000"><strong> TOTAL HARGA :</strong></td>
-                <td colspan="2" align="left"><strong>Rp. 250.000,00</strong></td>
+                <td colspan="2" align="left"><strong>@currency($total)</strong></td>
               </tr>
             </tbody>
           </table>
+          <div class="input-group">
+            <span class="input-group-text">Supplier & Tgl Masuk</span>
+            <select  style="border-color: black;" id="supplier" class="selectpicker form-control" data-live-search="true">
+                <option selected disabled>Pilih Supplier</option>
+                @foreach($supplier as $sp)
+                <option value="{{ $sp->id }}" data-tokens="{{ $sp->id }}">{{ $sp->nama }}</option>
+                @endforeach
+            </select>
+            <input type="date" aria-label="Last name" class="form-control">
+          </div>
     </div>
 </div>
 
@@ -110,7 +141,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
         </div>
       </div>
     </div>
@@ -145,6 +175,7 @@
                     });
                     }else {
                     console.log(response);
+                    $("#id_barang").val(response['id']);
                     $("#nama").val(response['nama']);
                     $("#harga").val(response['harga_beli']);
                     $("#stok").val(response['stok']);
@@ -191,6 +222,36 @@
     var html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+    function getnama($kode){
+        $.ajax({
+            type : "GET",
+            url : "/getbarang/" + $kode,
+            success: function(data){
+                $("#id_barang").val(data['id']);
+                $("#nama").val(data['nama']);
+                $("#harga").val(data['harga_beli']);
+                $("#stok").val(data['stok']);
+            },
+    });
+    }
+
+    window.deleteConfirm = function (e) {
+				e.preventDefault();
+				var form = e.target.form;
+                Swal.fire({
+                    title: 'Apakah anda ingin menghapus barang dari keranjang?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Hapus!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+                })
+		}
 </script>
 @endonce
 @endpush
