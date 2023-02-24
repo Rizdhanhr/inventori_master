@@ -1,9 +1,9 @@
 @extends('layouts.app1')
-@section('title','Barang Masuk')
+@section('title','Detail Barang Masuk')
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Transaksi Barang Masuk</h1>
+    <h1 class="h3 mb-0 text-gray-800">Detail Barang Masuk</h1>
     {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Cetak Kategori</a> --}}
 </div>
@@ -12,38 +12,38 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Barang Masuk</h6>
-
+        <h6 class="m-0 font-weight-bold text-primary">Detail Barang Masuk {{ $no_trx }}</h6>
     </div>
     <div class="card-body">
-        <button class="m-0 btn btn-primary" onclick="window.location.href='{{ route('transaksi-masuk.create') }}'" style="float: left;">Transaksi Baru</button>
         <div class="table-responsive">
             <br>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th width="10%">No</th>
-                        <th>No Trans.</th>
-                        <th>Tgl Masuk</th>
-                        <th>Supplier</th>
+                        <th>Barang</th>
+                        <th>Harga</th>
                         <th>Jumlah</th>
-                        <th width="8%">Action</th>
+                        <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($barang_masuk as $row)
+                    @foreach($detail as $row)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $row->no_trx }}</td>
-                        <td>{{ date('d F Y' ,strtotime($row->tgl_masuk)) }}</td>
-                        <td>{{ $row->supplier->nama }}</td>
+                        <td>{{ $row->barang->nama }}</td>
+                        <td>@currency($row->harga)</td>
                         <td>{{ $row->jumlah }}</td>
-                        <td align="center">
-                            <button type="button" onclick="window.location.href='{{ route('transaksi-masuk.show',$row->no_trx) }}'" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
-                        </td>
+                        <td>@currency($row->subtotal )</td>
                     </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" style="text-align:right">Total:</th>
+                        <th>@currency($detail->sum('subtotal'))</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

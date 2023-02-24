@@ -2,21 +2,16 @@
 
 namespace App\Models;
 
-namespace App\Models;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Supplier extends Model
+class BarangMasuk extends Model
 {
     use HasFactory;
-    use HasFactory;
-    use SoftDeletes;
-    protected $table = 'supplier';
-    protected $dates = ['deleted_at'];
-    protected $fillable = ['nama','alamat','no_hp'];
+    protected $table = 'barang_masuk';
+    protected $fillable = ['no_trx','id_supplier','jumlah','total_harga'];
     protected static function booted()
     {
         static::creating(function ($model) {
@@ -31,7 +26,7 @@ class Supplier extends Model
         });
     }
 
-    public function barangmasuk(){
-        return $this->hasMany(Supplier::class);
+    public function supplier(){
+        return $this->belongsTo(Supplier::class,'id_supplier');
     }
 }

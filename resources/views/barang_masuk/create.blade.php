@@ -84,7 +84,7 @@
                 <th scope="col" width="8%">Jumlah</th>
                 <th scope="col" width="20%" >Harga</th>
                 <th scope="col">Subtotal</th>
-                <th scope="col" width="8%">Action</th>
+                <th scope="col" width="6%">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -114,16 +114,24 @@
               </tr>
             </tbody>
           </table>
-          <div class="input-group">
-            <span class="input-group-text">Supplier & Tgl Masuk</span>
-            <select  style="border-color: black;" id="supplier" class="selectpicker form-control" data-live-search="true">
-                <option selected disabled>Pilih Supplier</option>
-                @foreach($supplier as $sp)
-                <option value="{{ $sp->id }}" data-tokens="{{ $sp->id }}">{{ $sp->nama }}</option>
-                @endforeach
-            </select>
-            <input type="date" aria-label="Last name" class="form-control">
-          </div>
+          <form action="{{ route('transaksi-masuk-proses') }}" method="POST">
+            @csrf
+            <div class="input-group">
+                <span class="input-group-text">Supplier & Tgl Masuk</span>
+                <select  style="border-color: black;" name="supplier" id="supplier" class="selectpicker form-control @error('supplier') is-invalid @enderror"" data-live-search="true">
+                    <option selected disabled>Pilih Supplier</option>
+                    @foreach($supplier as $sp)
+                    <option value="{{ $sp->id }}" data-tokens="{{ $sp->id }}">{{ $sp->nama }}</option>
+                    @endforeach
+                </select>
+                <input type="date" name="tgl_masuk" class="form-control @error('tgl_masuk') is-invalid @enderror">
+
+            </div>
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary form-control">Proses</button>
+            </div>
+          </form>
     </div>
 </div>
 

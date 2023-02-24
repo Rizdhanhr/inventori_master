@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Barang;
 use App\Models\DetailBarangMasuk;
+use App\Models\BarangMasuk;
 use App\Models\Supplier;
+use Carbon\Carbon;
+use Str;
 use Alert;
 use DB;
 
@@ -18,7 +21,8 @@ class BarangMasukController extends Controller
      */
     public function index()
     {
-        return view('barang_masuk.index');
+        $barang_masuk = BarangMasuk::latest()->get();
+        return view('barang_masuk.index',compact('barang_masuk'));
     }
 
     /**
@@ -80,9 +84,11 @@ class BarangMasukController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): Response
+    public function show(string $no_trx)
     {
-        //
+        $detail = DetailBarangMasuk::where(['no_trx' => $no_trx,'status' => 1])->get();
+
+        return view('barang_masuk.show',compact('detail','no_trx'));
     }
 
     /**
@@ -96,7 +102,7 @@ class BarangMasukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -126,5 +132,50 @@ class BarangMasukController extends Controller
         return response()->json($data[0]);
 
 
+    }
+
+    public function proses(Request $request){
+        $this->validate($request,[
+            'tgl_masuk'  => 'required',
+            'supplier' => 'required'
+        ],[
+            'tgl_masuk.required' => 'Masukkan Tgl Masuk !',
+            'supplier.required' => 'Masukkan Supplier !'
+        ]);
+
+        try{
+            $validasi = DetailBarangMasuk::where('status',0)->count();
+            if($validasi == 0){
+                alert()->error('Gagal !','Cart Kosong !');
+                return redirect()->back();
+            }
+            DB::transaction(function () use ($request) {
+                $random = strtoupper(str::random(10));
+                $inv = 'INV-BM'.'-'.$random;
+                $total = DetailBarangMasuk::where('status', 0)->sum('subtotal');
+                $jumlah = DetailBarangMasuk::where('status', 0)->sum('jumlah');
+                DetailBarangMasuk::where('status',0)->update([
+                    'no_trx' => $inv,
+                    'status' => 1
+                ]);
+                $penyesuaian = DetailBarangMasuk::where('no_trx',$inv)->get();
+                foreach($penyesuaian as $row){
+                    Barang::where('id',$row->id_barang)->update([
+                        'stok' => $row->barang->stok + $row->jumlah
+                    ]);
+                }
+                BarangMasuk::create([
+                    'no_trx' => $inv,
+                    'id_supplier' => $request->supplier,
+                    'total_harga' => $total,
+                    'jumlah' => $jumlah,
+                    'tgl_masuk' => $request->tgl_masuk
+                ]);
+            });
+            alert()->success('Sukses','Transaksi Barang Masuk Berhasil');
+            return redirect()->back();
+        }catch(Exception $e){
+
+        }
     }
 }
