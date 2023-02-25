@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class DetailBarangMasuk extends Model
+class DetailBarangKeluar extends Model
 {
     use HasFactory;
     protected $table = 'detail_barang_masuk';

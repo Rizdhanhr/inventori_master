@@ -61,7 +61,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ (request()->is('transaksi-masuk*')) ? 'active' : '' }}">
+    <li class="nav-item {{ (request()->is('transaksi-masuk*')) ? 'active' : '' }} {{ (request()->is('transaksi-keluar*')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-dollar-sign"></i>
@@ -71,7 +71,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Transaksi :</h6>
                 <a class="collapse-item {{ (request()->is('transaksi-masuk*')) ? 'active' : '' }}" href="{{ route('transaksi-masuk.index') }}">Barang Masuk</a>
-                <a class="collapse-item" href="register.html">Barang Keluar</a>
+                <a class="collapse-item {{ (request()->is('transaksi-keluar*')) ? 'active' : '' }}" href="{{ route('transaksi-keluar.index') }}">Barang Keluar</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Penyesuaian:</h6>
                 <a class="collapse-item" href="404.html">Penyesuaian</a>

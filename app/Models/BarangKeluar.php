@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class DetailBarangMasuk extends Model
+class BarangKeluar extends Model
 {
     use HasFactory;
-    protected $table = 'detail_barang_masuk';
-    protected $fillable = ['no_trx','id_barang','jumlah','harga','subtotal'];
-
+    protected $table = 'barang_keluar';
+    protected $fillable = ['no_trx','id_pelanggan','jumlah','total_harga'];
     protected static function booted()
     {
         static::creating(function ($model) {
@@ -28,7 +26,7 @@ class DetailBarangMasuk extends Model
         });
     }
 
-    public function barang(){
-        return $this->belongsTo(Barang::class,'id_barang');
-    }
+    // public function supplier(){
+    //     return $this->belongsTo(Supplier::class,'id_supplier');
+    // }
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangKeluarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +37,6 @@ Route::post('login', [LoginController::class,'login']);
 // Route::post('register', 'Auth\RegisterController@register');
 Route::post('logout', [LoginController::class,'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
-
     //Dashboard
     Route::resource('/dashboard', DashboardController::class);
     //Atribut Barang
@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getbarang/{kode}', [BarangMasukController::class,'getbarang']);
     Route::post('/transaksi-masuk/proses' , [BarangMasukController::class, 'proses'])->name('transaksi-masuk-proses');
     Route::resource('/transaksi-masuk', BarangMasukController::class);
+    //Transaksi Keluar
+    Route::resource('/transaksi-keluar', BarangKeluarController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');
