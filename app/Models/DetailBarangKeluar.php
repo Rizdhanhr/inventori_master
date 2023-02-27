@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class DetailBarangKeluar extends Model
 {
     use HasFactory;
-    protected $table = 'detail_barang_masuk';
+    protected $table = 'detail_barang_keluar';
     protected $fillable = ['no_trx','id_barang','jumlah','harga','subtotal'];
 
     protected static function booted()

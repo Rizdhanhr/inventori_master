@@ -96,7 +96,7 @@
                 <td>@currency($row->harga)</td>
                 <td>@currency($row->subtotal)</td>
                 <td>
-                  <form action="{{ route('transaksi-masuk.destroy',$row->id) }}" method="POST">
+                  <form action="{{ route('transaksi-keluar.destroy',$row->id) }}" method="POST">
                   @csrf
                   @method('DELETE')
                   <button type="submit" onclick="deleteConfirm(event)" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
@@ -114,16 +114,11 @@
               </tr>
             </tbody>
           </table>
-          <form action="" method="POST">
+          <form action="{{ route('transaksi-keluar-proses') }}" method="POST">
             @csrf
             <div class="input-group">
-                <span class="input-group-text">Pelanggan & Tgl Masuk</span>
-                <select  style="border-color: black;" name="supplier" id="supplier" class="selectpicker form-control @error('supplier') is-invalid @enderror"" data-live-search="true">
-                    <option selected disabled>Pilih Supplier</option>
-                    @foreach($pelanggan as $sp)
-                    <option value="{{ $sp->id }}" data-tokens="{{ $sp->id }}">{{ $sp->nama }}</option>
-                    @endforeach
-                </select>
+                <span class="input-group-text">Keterangan & Tgl Keluar</span>
+                <input type="text" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror">
                 <input type="date" name="tgl_masuk" class="form-control @error('tgl_masuk') is-invalid @enderror">
 
             </div>

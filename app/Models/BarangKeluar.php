@@ -11,7 +11,7 @@ class BarangKeluar extends Model
 {
     use HasFactory;
     protected $table = 'barang_keluar';
-    protected $fillable = ['no_trx','id_pelanggan','jumlah','total_harga'];
+    protected $fillable = ['no_trx','id_pelanggan','jumlah','total_harga','tgl_keluar','keterangan'];
     protected static function booted()
     {
         static::creating(function ($model) {
@@ -26,7 +26,7 @@ class BarangKeluar extends Model
         });
     }
 
-    // public function supplier(){
-    //     return $this->belongsTo(Supplier::class,'id_supplier');
-    // }
+    public function pelanggan(){
+        return $this->belongsTo(Pelanggan::class,'id_pelanggan');
+    }
 }

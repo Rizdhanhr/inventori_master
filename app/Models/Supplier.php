@@ -32,6 +32,6 @@ class Supplier extends Model
     }
 
     public function barangmasuk(){
-        return $this->hasMany(Supplier::class);
+        return $this->hasMany(BarangMasuk::class);
     }
 }

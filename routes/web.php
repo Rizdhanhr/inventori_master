@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transaksi-masuk/proses' , [BarangMasukController::class, 'proses'])->name('transaksi-masuk-proses');
     Route::resource('/transaksi-masuk', BarangMasukController::class);
     //Transaksi Keluar
+    Route::post('/transaksi-keluar/proses' , [BarangKeluarController::class, 'proses'])->name('transaksi-keluar-proses');
     Route::resource('/transaksi-keluar', BarangKeluarController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {

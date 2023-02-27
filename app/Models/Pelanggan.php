@@ -28,4 +28,8 @@ class Pelanggan extends Model
             $model->updated_at = Carbon::now();
         });
     }
+
+    public function barangkeluar(){
+        return $this->hasMany(BarangKeluar::class);
+    }
 }
