@@ -13,6 +13,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\SuratJalanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +59,11 @@ Route::middleware(['auth'])->group(function () {
     //Transaksi Keluar
     Route::post('/transaksi-keluar/proses' , [BarangKeluarController::class, 'proses'])->name('transaksi-keluar-proses');
     Route::resource('/transaksi-keluar', BarangKeluarController::class);
+    //Surat Jalan
+    Route::get('/getpelanggan/{id}',[SuratJalanController::class,'getpelanggan']);
+    Route::get('/cetak-surat',[SuratJalanController::class,'cetak'])->name('cetak-surat');
+    Route::get('/surat-jalan-tambah/{no_trx}',[SuratJalanController::class,'create'])->name('surat-jalan-tambah');
+    Route::resource('/surat-jalan', SuratJalanController::class)->except(['create']);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');

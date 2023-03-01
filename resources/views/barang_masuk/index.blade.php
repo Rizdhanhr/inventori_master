@@ -42,7 +42,7 @@
                             <form>
                             @csrf
                             <button type="button" onclick="window.location.href='{{ route('transaksi-masuk.show',$row->no_trx) }}'" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
-                            <button type="button" onclick="deleteConfirm(event)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            <button type="button" onclick="window.location.href='{{ route('transaksi-masuk.edit',$row->no_trx) }}'" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -56,23 +56,7 @@
 @push('script')
 @once
 <script>
-window.deleteConfirm = function (e) {
-				e.preventDefault();
-				var form = e.target.form;
-                Swal.fire({
-                    title: 'Apakah anda ingin membatalkan transaksi ini?',
-                    text: "Transaksi akan dibatalkan!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Batalkan Transaksi'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-                })
-		}
+
 </script>
 @endonce
 @endpush

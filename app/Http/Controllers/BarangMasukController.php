@@ -94,9 +94,10 @@ class BarangMasukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): Response
+    public function edit(string $no_trx)
     {
-        //
+        $detail = DetailBarangMasuk::where('no_trx',$no_trx)->get();
+        return view('barang_masuk.edit',compact('detail','no_trx'));
     }
 
     /**
@@ -104,7 +105,35 @@ class BarangMasukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try{
+            $hapus = DetailBarangMasuk::where('id',$id)->first();
+            $count = DetailBarangMasuk::where('no_trx',$hapus->no_trx)->count();
+            $update = BarangMasuk::where('no_trx',$hapus->no_trx)->first();
+            $barang = Barang::where('id',$hapus->id_barang)->first();
+            DB::transaction(function () use($hapus,$count,$update,$barang,$id){
+            if($count == 1){
+                Barang::where('id',$hapus->id_barang)->update([
+                    'stok' => $barang->stok + $hapus->jumlah
+                ]);
+                DetailBarangMasuk::where('id',$id)->delete();
+                BarangMasuk::where('no_trx',$hapus->no_trx)->delete();
+            }
+                Barang::where('id',$hapus->id_barang)->update([
+                    'stok' => $barang->stok - $hapus->jumlah
+                ]);
+                DetailBarangMasuk::where('id',$id)->delete();
+                $jumlah = DetailBarangMasuk::where('no_trx',$hapus->no_trx)->sum('jumlah');
+                $total = DetailBarangMasuk::where('no_trx',$hapus->no_trx)->sum('subtotal');
+                BarangMasuk::where('no_trx',$hapus->no_trx)->update([
+                    'jumlah' => $jumlah,
+                    'total_harga' => $total
+                ]);
+            });
+            alert()->success('Sukses','Transaksi Berhasil Dibatalkan');
+            return redirect('transaksi-masuk');
+        }catch(Exception $e){
+
+        }
     }
 
     /**

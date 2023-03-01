@@ -89,8 +89,8 @@
 
      <!-- Nav Item - Pages Collapse Menu -->
       <!-- Nav Item - Charts -->
-      <li class="nav-item" >
-         <a class="nav-link" href="">
+      <li class="nav-item {{ (request()->is('surat-jalan*')) ? 'active' : '' }}" >
+         <a class="nav-link " href="{{ route('surat-jalan.index') }}">
              <i class="fas fa-fw fa-envelope"></i>
              <span>Surat Jalan</span></a>
       </li>

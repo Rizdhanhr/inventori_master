@@ -9,6 +9,7 @@ use App\Models\Barang;
 use App\Models\DetailBarangKeluar;
 use App\Models\BarangKeluar;
 use App\Models\Pelanggan;
+use App\Models\SuratJalan;
 use Carbon\Carbon;
 use Str;
 use Alert;
@@ -113,13 +114,17 @@ class BarangKeluarController extends Controller
             $count = DetailBarangKeluar::where('no_trx',$hapus->no_trx)->count();
             $update = BarangKeluar::where('no_trx',$hapus->no_trx)->first();
             $barang = Barang::where('id',$hapus->id_barang)->first();
-            DB::transaction(function () use($hapus,$count,$update,$barang,$id){
+            $surat = SuratJalan::where('no_trx',$hapus->no_trx)->first();
+            DB::transaction(function () use($hapus,$count,$update,$barang,$id,$surat){
             if($count == 1){
                 Barang::where('id',$hapus->id_barang)->update([
                     'stok' => $barang->stok + $hapus->jumlah
                 ]);
                 DetailBarangKeluar::where('id',$id)->delete();
                 BarangKeluar::where('no_trx',$hapus->no_trx)->delete();
+                if($surat->exists()){
+                    SuratJalan::where('no_trx',$hapus->no_trx)->delete();
+                }
             }
                 Barang::where('id',$hapus->id_barang)->update([
                     'stok' => $barang->stok + $hapus->jumlah

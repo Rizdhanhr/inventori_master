@@ -50,7 +50,7 @@
                         <td>{{ $row->jumlah }}</td>
                         <td align="center">
                             @if($row->surat == 0)
-                            <button type="button" onclick="window.location.href=''" class="btn btn-warning btn-sm"><i class="fa fa-envelope"></i></button>
+                            <button type="button" onclick="window.location.href='{{ route('surat-jalan-tambah',$row->no_trx) }}'" class="btn btn-warning btn-sm"><i class="fa fa-envelope"></i></button>
                             @else
                             <button type="button" onclick="window.location.href=''" class="btn btn-primary btn-sm"><i class="fa fa-print"></i></button>
                             @endif
