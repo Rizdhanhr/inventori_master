@@ -14,6 +14,9 @@ use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\SuratJalanController;
+use App\Http\Controllers\PenyesuaianController;
+use App\Http\Controllers\LaporanBarangKeluarController;
+use App\Http\Controllers\LaporanBarangMasukController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,11 +62,16 @@ Route::middleware(['auth'])->group(function () {
     //Transaksi Keluar
     Route::post('/transaksi-keluar/proses' , [BarangKeluarController::class, 'proses'])->name('transaksi-keluar-proses');
     Route::resource('/transaksi-keluar', BarangKeluarController::class);
+    //Penyesuaian
+    Route::resource('/penyesuaian',PenyesuaianController::class);
     //Surat Jalan
     Route::get('/getpelanggan/{id}',[SuratJalanController::class,'getpelanggan']);
-    Route::get('/cetak-surat',[SuratJalanController::class,'cetak'])->name('cetak-surat');
+    Route::get('/cetak-surat/{no_surat}',[SuratJalanController::class,'cetak'])->name('cetak-surat');
     Route::get('/surat-jalan-tambah/{no_trx}',[SuratJalanController::class,'create'])->name('surat-jalan-tambah');
     Route::resource('/surat-jalan', SuratJalanController::class)->except(['create']);
+    //Laporan
+    Route::resource('/laporan-barang-masuk',LaporanBarangMasukController::class);
+    Route::resource('/laporan-barang-keluar',LaporanBarangKeluarController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');

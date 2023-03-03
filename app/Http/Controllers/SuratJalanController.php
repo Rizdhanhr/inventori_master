@@ -107,9 +107,24 @@ class SuratJalanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
-        //
+        $surat = SuratJalan::findOrFail($id);
+        try{
+            DB::transaction(function () use($surat) {
+                BarangKeluar::where('no_trx',$surat->no_trx)->update([
+                    'surat' => 0,
+                    'id_pelanggan' => null,
+                ]);
+                $surat->delete();
+            });
+            alert()->success('Sukses','Surat Berhasil Dihapus');
+            return redirect()->back();
+        }catch(\Exception $e){
+
+        }
+
+
     }
 
     public function getpelanggan($id){
@@ -122,7 +137,10 @@ class SuratJalanController extends Controller
         return response()->json($data[0]);
     }
 
-    public function cetak(){
-        return view('surat_jalan.cetak');
+    public function cetak($no_surat){
+        $surat = SuratJalan::where('no_surat',$no_surat)->first();
+        $detail = DetailBarangKeluar::where('no_trx',$surat->no_trx)->get();
+
+        return view('surat_jalan.cetak',compact('surat','detail'));
     }
 }

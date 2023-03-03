@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\Barang;
+use App\Models\BarangMasuk;
+use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -13,8 +16,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $barang = Barang::count();
-        return view('dashboard.index',compact('barang'));
+
+        $data = [
+            'jumlah_bm' => BarangMasuk::whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfweek()])->sum('jumlah'),
+            'jumlah_bk' => BarangKeluar::whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfweek()])->sum('jumlah'),
+            'barang' => Barang::count(),
+            'bm' =>  BarangMasuk::whereMonth('created_at',Carbon::now()->month)->sum('jumlah'),
+            'bk' =>  BarangKeluar::whereMonth('created_at',Carbon::now()->month)->sum('jumlah'),
+        ];
+        return view('dashboard.index')->with($data);
     }
 
     /**

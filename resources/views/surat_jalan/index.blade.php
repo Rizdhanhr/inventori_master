@@ -38,11 +38,12 @@
                         <td>{{ $row->pelanggan->nama }}</td>
                         <td>{{ $row->nama }}</td>
                         <td align="center">
-                            <form>
+                            <form action="{{ route('surat-jalan.destroy',$row->id) }}" method="POST">
                             @csrf
-                            <a type="button"   href="{{ route('cetak-surat') }}"  target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i></a>
-                            <button type="button" onclick="window.location.href=''" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
-                            <button type="button" onclick="window.location.href=''" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            @method('DELETE')
+                            <a type="button"   href="{{ route('cetak-surat',$row->no_surat) }}"  target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i></a>
+                            {{-- <button type="button" onclick="window.location.href=''" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></button> --}}
+                            <button type="submit" onclick="deleteConfirm(event)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -56,7 +57,23 @@
 @push('script')
 @once
 <script>
-
+        window.deleteConfirm = function (e) {
+				e.preventDefault();
+				var form = e.target.form;
+                Swal.fire({
+                    title: 'Apakah anda ingin menghapus surat jalan ini?',
+                    text: "Surat akan dibatalkan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Batalkan Surat'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+                })
+		}
 </script>
 @endonce
 @endpush

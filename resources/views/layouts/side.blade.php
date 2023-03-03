@@ -102,7 +102,7 @@
         Laporan
      </div>
      <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {{ (request()->is('laporan-barang-keluar*')) ? 'active' : '' }} {{ (request()->is('laporan-barang-masuk*')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporan"
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -110,10 +110,9 @@
         </a>
         <div id="laporan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="login.html">Login</a>
-                <a class="collapse-item" href="register.html">Register</a>
-                <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                <a class="collapse-item {{ (request()->is('laporan-barang-keluar*')) ? 'active' : '' }}" href="{{ route('laporan-barang-keluar.index') }}">Barang Keluar</a>
+                <a class="collapse-item {{ (request()->is('laporan-barang-masuk*')) ? 'active' : '' }}" href="{{ route('laporan-barang-masuk.index') }}">Barang Masuk</a>
+                <a class="collapse-item" href="forgot-password.html">Penyesuaian</a>
             </div>
         </div>
     </li>
