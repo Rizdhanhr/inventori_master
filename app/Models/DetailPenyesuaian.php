@@ -11,7 +11,7 @@ class DetailPenyesuaian extends Model
 {
     use HasFactory;
     protected $table = 'detail_penyesuaian';
-    protected $fillable = ['no_penyesuaian','stok_tercatat','stok_aktual'];
+    protected $fillable = ['id_barang','no_penyesuaian','stok_tercatat','stok_aktual'];
 
     protected static function booted()
     {
@@ -25,5 +25,9 @@ class DetailPenyesuaian extends Model
             $model->updated_by = Auth::id();
             $model->updated_at = Carbon::now();
         });
+    }
+
+    public function barang(){
+        return $this->belongsTo(Barang::class, 'id_barang');
     }
 }

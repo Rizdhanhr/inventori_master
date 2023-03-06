@@ -17,6 +17,7 @@ use App\Http\Controllers\SuratJalanController;
 use App\Http\Controllers\PenyesuaianController;
 use App\Http\Controllers\LaporanBarangKeluarController;
 use App\Http\Controllers\LaporanBarangMasukController;
+use App\Http\Controllers\LaporanPenyesuaianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transaksi-keluar/proses' , [BarangKeluarController::class, 'proses'])->name('transaksi-keluar-proses');
     Route::resource('/transaksi-keluar', BarangKeluarController::class);
     //Penyesuaian
+    Route::post('/penyesuaian/proses' , [PenyesuaianController::class, 'proses'])->name('penyesuaian-proses');
     Route::resource('/penyesuaian',PenyesuaianController::class);
     //Surat Jalan
     Route::get('/getpelanggan/{id}',[SuratJalanController::class,'getpelanggan']);
@@ -72,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
     //Laporan
     Route::resource('/laporan-barang-masuk',LaporanBarangMasukController::class);
     Route::resource('/laporan-barang-keluar',LaporanBarangKeluarController::class);
+    Route::resource('/laporan-penyesuaian',LaporanPenyesuaianController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');

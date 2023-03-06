@@ -50,4 +50,8 @@ class Barang extends Model
     public function detailbarangkeluar(){
         return $this->hasMany(DetailBarangKeluar::class);
     }
+
+    public function detailpenyesuaian(){
+        return $this->hasMany(DetailPenyesuaian::class);
+    }
 }
