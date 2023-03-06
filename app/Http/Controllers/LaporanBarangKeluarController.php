@@ -20,11 +20,12 @@ class LaporanBarangKeluarController extends Controller
         $awal = $request->awal;
         $akhir = $request->akhir;
         if($awal && $akhir){
-        $laporan = DetailBarangKeluar::whereBetween('created_at',[$awal, $akhir])
+        $laporan = DetailBarangKeluar::where('status',1)
+                    ->whereBetween('created_at',[$awal, $akhir])
                    ->orderBy('created_at','desc')
                    ->get();
         }else{
-        $laporan = DetailBarangKeluar::orderBy('created_at','desc')->limit(5)->get();
+        $laporan = DetailBarangKeluar::orderBy('created_at','desc')->where('status',1)->limit(5)->get();
         }
 
         return view('laporan_barangkeluar.index',compact('laporan','awal','akhir'));

@@ -18,6 +18,8 @@ use App\Http\Controllers\PenyesuaianController;
 use App\Http\Controllers\LaporanBarangKeluarController;
 use App\Http\Controllers\LaporanBarangMasukController;
 use App\Http\Controllers\LaporanPenyesuaianController;
+use App\Http\Controllers\SafetyStockController;
+use App\Http\Controllers\GeneralSettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +56,8 @@ Route::middleware(['auth'])->group(function () {
     //Barang
     Route::get('/export-barang',[BarangController::class,'export'])->name('export-barang');
     Route::resource('/barang', BarangController::class);
+    //Safety Stock
+    Route::resource('safety-stock', SafetyStockController::class);
     //Edit Profil
     Route::post('/ganti-password',[DetailUserController::class,'gantipassword'])->name('ganti-password');
     Route::resource('/user', DetailUserController::class);
@@ -86,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['superAdmin'])->group(function () {
         Route::post('/change-password/{id}',[ManajemenUserController::class,'gantipassword'])->name('change-password');
         Route::resource('/manajemen-user', ManajemenUserController::class);
+        Route::resource('/general-setting',GeneralSettingController::class);
     });
 
 });

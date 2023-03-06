@@ -19,11 +19,11 @@ class LaporanPenyesuaianController extends Controller
         $awal = $request->awal;
         $akhir = $request->akhir;
         if($awal && $akhir){
-        $laporan = DetailPenyesuaian::whereBetween('created_at',[$awal, $akhir])
+        $laporan = DetailPenyesuaian::where('status',1)->whereBetween('created_at',[$awal, $akhir])
                    ->orderBy('created_at','desc')
                    ->get();
         }else{
-        $laporan = DetailPenyesuaian::orderBy('created_at','desc')->limit(5)->get();
+        $laporan = DetailPenyesuaian::orderBy('created_at','desc')->where('status',1)->limit(5)->get();
         }
 
         return view('laporan_penyesuaian.index',compact('laporan','awal','akhir'));

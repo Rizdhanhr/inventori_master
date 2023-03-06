@@ -184,7 +184,6 @@ class BarangController extends Controller
             'kategori' => 'required',
             'brand' => 'required',
             'satuan' => 'required',
-            'stok' => 'required',
             'stok_minim' => 'required',
             'harga_beli' => 'required',
             'harga_jual' => 'required',
@@ -205,7 +204,6 @@ class BarangController extends Controller
                     $barang->id_kategori = $request->kategori;
                     $barang->id_brand = $request->brand;
                     $barang->id_satuan = $request->satuan;
-                    $barang->stok = $request->stok;
                     $barang->stok_minimal = $request->stok_minim;
                     $barang->harga_beli = $request->harga_beli;
                     $barang->harga_jual = $request->harga_jual;
@@ -220,7 +218,6 @@ class BarangController extends Controller
                     $barang->id_kategori = $request->kategori;
                     $barang->id_brand = $request->brand;
                     $barang->id_satuan = $request->satuan;
-                    $barang->stok = $request->stok;
                     $barang->stok_minimal = $request->stok_minim;
                     $barang->harga_beli = $request->harga_beli;
                     $barang->harga_jual = $request->harga_jual;

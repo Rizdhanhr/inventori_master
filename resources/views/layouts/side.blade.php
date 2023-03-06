@@ -78,7 +78,19 @@
             </div>
         </div>
     </li>
+    <hr class="sidebar-divider">
+      <!-- Heading -->
+    <div class="sidebar-heading">
+        Stok
+    </div>
 
+    <!-- Nav Item - Pages Collapse Menu -->
+     <!-- Nav Item - Charts -->
+     <li class="nav-item {{ (request()->is('safety-stock*')) ? 'active' : '' }}" >
+        <a class="nav-link" href="{{ route('safety-stock.index') }}">
+            <i class="fas fa-arrow-up"></i>
+            <span>Safety Stok</span></a>
+     </li>
      <!-- Divider -->
      <hr class="sidebar-divider">
 
@@ -149,6 +161,11 @@
         <a class="nav-link" href="{{ route('manajemen-user.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Manajemen User</span></a>
+    </li>
+    <li class="nav-item {{ (request()->is('general-setting*')) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('general-setting.index') }}">
+            <i class="fas fa-bars"></i>
+            <span>General Setting</span></a>
     </li>
 
     <!-- Divider -->

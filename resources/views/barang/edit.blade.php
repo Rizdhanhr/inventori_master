@@ -67,11 +67,6 @@
                       <span style="color : red">@error('brand') {{ $message }} @enderror</span>
                 </div>
                 <div class="mb-3">
-                    <label for="Nama Barang" class="form-label">Stok</label>
-                    <input type="number" name="stok" value="{{ $barang->stok }}" class="form-control @error('stok') is-invalid @enderror" placeholder="Masukkan Stok">
-                    <span style="color : red">@error('stok') {{ $message }} @enderror</span>
-                </div>
-                <div class="mb-3">
                     <label for="Nama Barang" class="form-label">Stok Minimal</label>
                     <input type="number" name="stok_minim" value="{{ $barang->stok_minimal }}" class="form-control @error('stok_minim') is-invalid @enderror" placeholder="Masukkan Stok Minimal">
                     <span style="color : red">@error('stok_minim') {{ $message }} @enderror </span>
