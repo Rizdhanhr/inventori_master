@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 use DB;
 use Carbon;
+use App\Exports\ExportKategori;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class KategoriController extends Controller
@@ -129,5 +131,8 @@ class KategoriController extends Controller
         }
 
 
+    }
+    public function export(){
+        return Excel::download(new ExportKategori, 'kategori.xlsx');
     }
 }

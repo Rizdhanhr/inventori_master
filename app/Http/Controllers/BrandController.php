@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use DB;
 use Carbon;
+use App\Exports\ExportBrand;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
@@ -126,5 +128,8 @@ class BrandController extends Controller
 
         }
 
+    }
+    public function export(){
+        return Excel::download(new ExportBrand, 'brand.xlsx');
     }
 }

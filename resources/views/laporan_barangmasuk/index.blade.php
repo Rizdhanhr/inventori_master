@@ -9,8 +9,13 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Laporan Barang Masuk</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Cetak Laporan</a>
+    <form action="{{ route('export-barang-masuk') }}" method="GET">
+        @csrf
+        <input type="hidden" name="awal" value="{{ $awal }}">
+        <input type="hidden" name="akhir" value="{{ $akhir }}">
+        <button type="submit"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Cetak Laporan</button>
+    </form>
 </div>
 
 
@@ -63,11 +68,11 @@
         <form action="{{ route('laporan-barang-masuk.index') }}" method="GET">
         @csrf
             <div class="form-floating mb-3">
-                <input type="date" name="awal" class="form-control" id="floatingInput">
+                <input type="date" value="{{ $awal }}" name="awal" class="form-control" id="floatingInput">
                 <label for="floatingInput">Tgl Awal</label>
               </div>
               <div class="form-floating">
-                <input type="date" name="akhir" class="form-control" id="floatingPassword">
+                <input type="date" value="{{ $akhir }}" name="akhir" class="form-control" id="floatingPassword">
                 <label for="floatingPassword">Tgl Akhir</label>
               </div>
         </div>

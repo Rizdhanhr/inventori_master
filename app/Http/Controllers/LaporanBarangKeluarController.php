@@ -6,6 +6,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\DetailBarangKeluar;
+use App\Exports\ExportLapBarangKeluar;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanBarangKeluarController extends Controller
 {
@@ -14,7 +16,6 @@ class LaporanBarangKeluarController extends Controller
      */
     public function index(Request $request)
     {
-
 
         $awal = $request->awal;
         $akhir = $request->akhir;
@@ -26,7 +27,7 @@ class LaporanBarangKeluarController extends Controller
         $laporan = DetailBarangKeluar::orderBy('created_at','desc')->limit(5)->get();
         }
 
-        return view('laporan_barangkeluar.index',compact('laporan'));
+        return view('laporan_barangkeluar.index',compact('laporan','awal','akhir'));
     }
 
     /**
@@ -75,5 +76,12 @@ class LaporanBarangKeluarController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         //
+    }
+
+    public function export(Request $request){
+        $awal = $request->awal;
+        $akhir = $request->akhir;
+
+        return Excel::download(new ExportLapBarangKeluar($awal,$akhir), 'barang-keluar.xlsx');
     }
 }

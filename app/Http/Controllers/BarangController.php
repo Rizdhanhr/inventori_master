@@ -7,6 +7,8 @@ use App\Models\Barang;
 use App\Models\Kategori;
 use App\Models\Brand;
 use App\Models\Satuan;
+use App\Exports\ExportBarang;
+use Maatwebsite\Excel\Facades\Excel;
 use Str;
 use DB;
 use Alert;
@@ -254,5 +256,8 @@ class BarangController extends Controller
 
         }
 
+    }
+    public function export(){
+        return Excel::download(new ExportBarang, 'barang.xlsx');
     }
 }

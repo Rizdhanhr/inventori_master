@@ -182,16 +182,16 @@
 
     function onScanError(errorMessage) {
         // handle on error condition, with error message
-        $('.modal').each(function(){
-            $(this).modal('hide');
-        });
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: 'QR Gagal Discan!',
-            timer: 1500,
-            timerProgressBar: true
-        });
+        // $('.modal').each(function(){
+        //     $(this).modal('hide');
+        // });
+        // Swal.fire({
+        //     icon: 'error',
+        //     title: 'Gagal',
+        //     text: 'QR Gagal Discan!',
+        //     timer: 1500,
+        //     timerProgressBar: true
+        // });
     }
     var html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", { fps: 10, qrbox: 250 });

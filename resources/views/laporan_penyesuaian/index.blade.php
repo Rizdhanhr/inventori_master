@@ -1,5 +1,5 @@
 @extends('layouts.app1')
-@section('title','Laporan Barang Keluar')
+@section('title','Laporan Penyesuaian')
 @once
 @push('css')
 
@@ -8,13 +8,13 @@
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Laporan Barang Keluar</h1>
-    <form action="{{ route('export-barang-keluar') }}" method="GET">
-        @csrf
-        <input type="hidden" name="awal" value="{{ $awal }}">
-        <input type="hidden" name="akhir" value="{{ $akhir }}">
-        <button type="submit"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Cetak Laporan</button>
+    <h1 class="h3 mb-0 text-gray-800">Laporan Penyesuaian</h1>
+    <form action="{{ route('export-penyesuaian') }}" method="GET">
+    @csrf
+    <input type="hidden" name="awal" value="{{ $awal }}">
+    <input type="hidden" name="akhir" value="{{ $akhir }}">
+    <button type="submit"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Cetak Laporan</button>
     </form>
 </div>
 
@@ -22,7 +22,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Laporan Barang Keluar</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Laporan Penyesuaian</h6>
     </div>
     <div class="card-body">
 
@@ -33,23 +33,23 @@
                 <thead>
                     <tr>
                         <th width="10%">No</th>
-                        <th>Nama</th>
-                        <th width="10%">Jumlah</th>
-                        <th>Subtotal</th>
+                        <th width="40%">Nama</th>
+                        <th>Stok Tercatat</th>
+                        <th>Stok Aktual</th>
                         <th width="15%">Tgl</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($laporan as $lap )
+                @foreach ($laporan as $lap)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $lap->barang->nama }}</td>
-                        <td>{{ $lap->jumlah }}</td>
-                        <td>@currency($lap->subtotal)</td>
+                        <td>{{ $lap->stok_tercatat }}</td>
+                        <td>{{ $lap->stok_aktual }}</td>
                         <td>{{ $lap->created_at->format('d-m-Y') }}</td>
                     </tr>
-                    @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -61,12 +61,12 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Filter Laporan Barang Keluar</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Filter Laporan Penyesuaian</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form action="{{ route('laporan-barang-keluar.index') }}" method="GET">
-            @csrf
+        <form action="{{ route('laporan-penyesuaian.index') }}" method="GET">
+        @csrf
             <div class="form-floating mb-3">
                 <input type="date" value="{{ $awal }}" name="awal" class="form-control" id="floatingInput">
                 <label for="floatingInput">Tgl Awal</label>
@@ -88,5 +88,8 @@
 @once
 @push('script')
 
+<script>
+
+</script>
 @endpush
 @endonce

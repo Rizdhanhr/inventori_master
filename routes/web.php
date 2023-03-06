@@ -45,10 +45,14 @@ Route::middleware(['auth'])->group(function () {
     //Dashboard
     Route::resource('/dashboard', DashboardController::class);
     //Atribut Barang
+    Route::get('export-kategori',[KategoriController::class,'export'])->name('export-kategori');
+    Route::get('export-brand',[BrandController::class,'export'])->name('export-brand');
+    Route::get('export-satuan',[SatuanController::class,'export'])->name('export-satuan');
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/brand', BrandController::class);
     Route::resource('/satuan', SatuanController::class);
     //Barang
+    Route::get('/export-barang',[BarangController::class,'export'])->name('export-barang');
     Route::resource('/barang', BarangController::class);
     //Edit Profil
     Route::post('/ganti-password',[DetailUserController::class,'gantipassword'])->name('ganti-password');
@@ -72,8 +76,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/surat-jalan-tambah/{no_trx}',[SuratJalanController::class,'create'])->name('surat-jalan-tambah');
     Route::resource('/surat-jalan', SuratJalanController::class)->except(['create']);
     //Laporan
+    Route::get('/export-barang-masuk',[LaporanBarangMasukController::class,'export'])->name('export-barang-masuk');
     Route::resource('/laporan-barang-masuk',LaporanBarangMasukController::class);
+    Route::get('/export-barang-keluar',[LaporanBarangKeluarController::class,'export'])->name('export-barang-keluar');
     Route::resource('/laporan-barang-keluar',LaporanBarangKeluarController::class);
+    Route::get('/export-penyesuaian',[LaporanPenyesuaianController::class,'export'])->name('export-penyesuaian');
     Route::resource('/laporan-penyesuaian',LaporanPenyesuaianController::class);
     //Super Admin
     Route::middleware(['superAdmin'])->group(function () {

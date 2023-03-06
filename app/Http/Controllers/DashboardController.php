@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\BarangKeluar;
+use App\Models\SuratJalan;
+use App\Models\DetailBarangKeluar;
+use DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -16,6 +19,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $barang_keluar = DB::select("SELECT SUM(barang_keluar.jumlah) AS total, MONTHNAME(barang_keluar.created_at) AS bulan FROM barang_keluar
+        WHERE YEAR(barang_keluar.created_at) = YEAR(CURRENT_DATE())
+        GROUP BY MONTHNAME(barang_keluar.created_at)");
+        foreach($barang_keluar as $query){
+            $bulan[] = $query->bulan;
+            $total[] = $query->total;
+        }
 
         $data = [
             'jumlah_bm' => BarangMasuk::whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfweek()])->sum('jumlah'),
@@ -23,8 +33,10 @@ class DashboardController extends Controller
             'barang' => Barang::count(),
             'bm' =>  BarangMasuk::whereMonth('created_at',Carbon::now()->month)->sum('jumlah'),
             'bk' =>  BarangKeluar::whereMonth('created_at',Carbon::now()->month)->sum('jumlah'),
+            'jumlah_surat' => SuratJalan::whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfweek()])->count(),
+
         ];
-        return view('dashboard.index')->with($data);
+        return view('dashboard.index',compact('total','bulan'))->with($data);
     }
 
     /**

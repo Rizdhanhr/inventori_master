@@ -102,7 +102,7 @@
         Laporan
      </div>
      <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ (request()->is('laporan-barang-keluar*')) ? 'active' : '' }} {{ (request()->is('laporan-barang-masuk*')) ? 'active' : '' }}">
+    <li class="nav-item {{ (request()->is('laporan-barang-keluar*')) ? 'active' : '' }} {{ (request()->is('laporan-barang-masuk*')) ? 'active' : '' }} {{ (request()->is('laporan-penyesuaian*')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporan"
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -112,7 +112,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ (request()->is('laporan-barang-keluar*')) ? 'active' : '' }}" href="{{ route('laporan-barang-keluar.index') }}">Barang Keluar</a>
                 <a class="collapse-item {{ (request()->is('laporan-barang-masuk*')) ? 'active' : '' }}" href="{{ route('laporan-barang-masuk.index') }}">Barang Masuk</a>
-                <a class="collapse-item" href="forgot-password.html">Penyesuaian</a>
+                <a class="collapse-item {{ (request()->is('laporan-penyesuaian*')) ? 'active' : '' }}" href="{{ route('laporan-penyesuaian.index') }}">Penyesuaian</a>
             </div>
         </div>
     </li>

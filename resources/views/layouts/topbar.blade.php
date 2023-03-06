@@ -49,7 +49,7 @@
                 </form>
             </div>
         </li>
-        <!-- Nav Item - Alerts -->
+        {{-- <!-- Nav Item - Alerts -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,7 +100,7 @@
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
             </div>
         </li>
-        <div class="topbar-divider d-none d-sm-block"></div>
+        <div class="topbar-divider d-none d-sm-block"></div> --}}
 
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">

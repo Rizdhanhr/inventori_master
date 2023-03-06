@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Satuan;
 use RealRashid\SweetAlert\Facades\Alert;
 use DB;
+use App\Exports\ExportSatuan;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SatuanController extends Controller
 {
@@ -122,5 +124,8 @@ class SatuanController extends Controller
         }catch(Exception $e){
 
         }
+    }
+    public function export(){
+        return Excel::download(new ExportSatuan, 'satuan.xlsx');
     }
 }
