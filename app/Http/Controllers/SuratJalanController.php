@@ -140,7 +140,7 @@ class SuratJalanController extends Controller
     public function cetak($no_surat){
         $surat = SuratJalan::where('no_surat',$no_surat)->first();
         $detail = DetailBarangKeluar::where('no_trx',$surat->no_trx)->get();
-
-        return view('surat_jalan.cetak',compact('surat','detail'));
+        $general = DB::table('general')->get();
+        return view('surat_jalan.cetak',compact('surat','detail','general'));
     }
 }

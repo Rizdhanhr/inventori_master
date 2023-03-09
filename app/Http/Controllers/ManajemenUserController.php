@@ -6,6 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
+use Auth;
 use DB;
 use Hash;
 use Alert;
@@ -17,7 +18,8 @@ class ManajemenUserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+        $auth = Auth::user();
+        $user = User::where('id','!=',$auth->id)->get();
         return view('manajemen_user.index',compact('user'));
     }
 

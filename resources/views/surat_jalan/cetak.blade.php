@@ -12,13 +12,23 @@
     <div class="container-fluid">
         <table  class="table table-bordered border-dark">
             <tbody>
+                @forelse ($general as $gr)
                 <tr>
-                  <th width="30" class="text-center"><h3>Surat Jalan</h3></th>
-                  <th width="30%" class="text-center" rowspan="3" scope="col"><img src="dist/upload/2916251_google_communication_logo_marketing_media_icon.png" width="180" height="80"></th>
+                  <th width="30" class="text-center"><h3>Surat Jalan {{ $gr->nama }}</h3></th>
+                  <th width="30%" class="text-center" rowspan="3" scope="col"><img src="{{ asset('storage/setting/'.$gr->logo) }}" width="180" height="80"></th>
                 </tr>
                 <tr>
-                  <th width="200" class="text-center"><h5>Jl. Taman Jambangan Indah</h5></th>
+                  <th width="200" class="text-center"><h5>{{ $gr->alamat }}</h5></th>
                 </tr>
+                @empty
+                <tr>
+                    <th width="30" class="text-center"><h3>Surat Jalan</h3></th>
+                    <th width="30%" class="text-center" rowspan="3" scope="col"><img src="{{ asset('gambar_barang') }}/no_image.png" width="180" height="80"></th>
+                </tr>
+                <tr>
+                    <th width="200" class="text-center"><h5>Jl. Taman Jambangan Indah</h5></th>
+                </tr>
+                @endforelse
                 <tr>
                   <th class="text-center"><h6>SURAT JALAN #{{ $surat->no_surat }}</h6></th>
                 </tr>
