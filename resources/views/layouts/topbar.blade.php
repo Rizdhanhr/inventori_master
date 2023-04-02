@@ -118,6 +118,16 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
+                <a class="dropdown-item">
+                    <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
+                    @if($user->level == '1')
+                    <span class="badge text-bg-warning" align="center">Super Admin</span>
+                    @elseif($user->level == '2')
+                    <span class="badge text-bg-primary" align="center">Gudang</span>
+                    @else
+                    <span class="badge text-bg-success" align="center">Admin</span>
+                    @endif
+                </a>
                 <div class="dropdown-divider"></div>
                 <form  action="{{ route('logout') }}" method="POST">
                     @csrf

@@ -36,6 +36,8 @@
                         <td>
                             @if($k->level == 1)
                             <span class="badge text-bg-warning">Super Admin</span>
+                            @elseif ($k->level == 2)
+                            <span class="badge text-bg-primary">Gudang</span>
                             @else
                             <span class="badge text-bg-success">Admin</span>
                             @endif

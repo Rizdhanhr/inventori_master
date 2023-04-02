@@ -21,7 +21,8 @@ class DashboardController extends Controller
     {
         $barang_keluar = DB::select("SELECT SUM(barang_keluar.jumlah) AS total, MONTHNAME(barang_keluar.created_at) AS bulan FROM barang_keluar
         WHERE YEAR(barang_keluar.created_at) = YEAR(CURRENT_DATE())
-        GROUP BY MONTHNAME(barang_keluar.created_at)");
+        GROUP BY MONTHNAME(barang_keluar.created_at)
+        ORDER BY month(barang_keluar.created_at)");
         foreach($barang_keluar as $query){
             $bulan[] = $query->bulan;
             $total[] = $query->total;

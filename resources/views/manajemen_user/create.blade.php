@@ -27,6 +27,7 @@
                     <div class="form-floating form-group">
                         <select class="form-select @error('role') is-invalid @enderror" name="role" id="floatingSelect" aria-label="Floating label select example">
                           <option value="0">Admin</option>
+                          <option value="2">Gudang</option>
                           <option value="1">Super Admin</option>
                         </select>
                         <label for="floatingSelect">Pilih Role</label>

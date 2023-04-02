@@ -19,10 +19,13 @@
             <span>Dashboard</span></a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
 
+    @if(Auth::check() && Auth::user()->level == "2")
+    @else
+      <!-- Divider -->
+      <hr class="sidebar-divider">
     <!-- Heading -->
+
     <div class="sidebar-heading">
         Barang
     </div>
@@ -51,10 +54,11 @@
             </div>
         </div>
     </li>
+    @endif
 
+    @if(Auth::check() and Auth::user()->level == '2')
     <!-- Divider -->
     <hr class="sidebar-divider">
-
     <!-- Heading -->
     <div class="sidebar-heading">
        Transaksi
@@ -78,6 +82,7 @@
             </div>
         </div>
     </li>
+    @endif
     <hr class="sidebar-divider">
       <!-- Heading -->
     <div class="sidebar-heading">
@@ -91,22 +96,28 @@
             <i class="fas fa-arrow-up"></i>
             <span>Safety Stok</span></a>
      </li>
-     <!-- Divider -->
-     <hr class="sidebar-divider">
 
-     <!-- Heading -->
-     <div class="sidebar-heading">
-         Surat
-     </div>
+     @if(Auth::check() and Auth::user()->level == '0')
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
-     <!-- Nav Item - Pages Collapse Menu -->
-      <!-- Nav Item - Charts -->
-      <li class="nav-item {{ (request()->is('surat-jalan*')) ? 'active' : '' }}" >
-         <a class="nav-link " href="{{ route('surat-jalan.index') }}">
-             <i class="fas fa-fw fa-envelope"></i>
-             <span>Surat Jalan</span></a>
-      </li>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Surat
+        </div>
 
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Nav Item - Charts -->
+        <li class="nav-item {{ (request()->is('surat-jalan*')) ? 'active' : '' }}" >
+            <a class="nav-link " href="{{ route('surat-jalan.index') }}">
+                <i class="fas fa-fw fa-envelope"></i>
+                <span>Surat Jalan</span></a>
+        </li>
+     @endif
+
+
+    @if(Auth::check() && Auth::user()->level == "2")
+    @else
      <!-- Divider -->
      <hr class="sidebar-divider">
      <!-- Heading -->
@@ -128,26 +139,32 @@
             </div>
         </div>
     </li>
+    @endif
 
-     <!-- Divider -->
-     <hr class="sidebar-divider">
+    @if (Auth::check() and Auth::user()->level == '0')
+    <!-- Divider -->
+        <hr class="sidebar-divider">
 
-     <!-- Heading -->
-     <div class="sidebar-heading">
-        Pelanggan & Supplier
-     </div>
-    <!-- Nav Item - Charts -->
-    <li class="nav-item {{ (request()->is('pelanggan*')) ? 'active' : '' }}">
-        <a class="nav-link "  href="{{ route('pelanggan.index') }}">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Pelanggan</span></a>
-    </li>
-    <!-- Nav Item - Charts -->
-    <li class="nav-item {{ (request()->is('supplier*')) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('supplier.index') }}">
-            <i class="fas fa-truck"></i>
-            <span>Supplier</span></a>
-    </li>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Pelanggan & Supplier
+        </div>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item {{ (request()->is('pelanggan*')) ? 'active' : '' }}">
+            <a class="nav-link "  href="{{ route('pelanggan.index') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Pelanggan</span></a>
+        </li>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item {{ (request()->is('supplier*')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('supplier.index') }}">
+                <i class="fas fa-truck"></i>
+                <span>Supplier</span></a>
+        </li>
+    @else
+
+    @endif
+
 
     @if(Auth::check() && Auth::user()->level == "1")
      <!-- Divider -->
